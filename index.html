@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Quotes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* [커스텀 스타일] 레트로 감성을 위한 CSS */
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Noto+Sans+KR:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #e0e7ff;
+            --window-bg: #fff1e6;
+            --border-color: #2d2d2d;
+            --accent-blue: #93c5fd;
+            --accent-red: #fca5a5;
+            --accent-yellow: #fbbf24;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(var(--accent-blue) 1px, transparent 1px),
+                linear-gradient(90deg, var(--accent-blue) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--border-color);
+            overflow-x: hidden;
+        }
+
+        /* 레트로 박스 스타일 */
+        .retro-box {
+            background-color: var(--window-bg);
+            border: 3px solid var(--border-color);
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.8);
+            border-radius: 0px;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .retro-input {
+            width: 100%;
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 10px;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            outline: none;
+            box-shadow: inset 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        .retro-input:focus {
+            background: #fff;
+            box-shadow: inset 2px 2px 0px rgba(0,0,0,0.2);
+        }
+
+        .retro-btn {
+            background-color: var(--accent-yellow);
+            border: 2px solid var(--border-color);
+            padding: 8px 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--border-color);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .retro-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px var(--border-color);
+        }
+        
+        .retro-btn.primary { background-color: var(--accent-yellow); }
+        .retro-btn.danger { background-color: var(--accent-red); }
+        .retro-btn.success { background-color: #86efac; }
+        .retro-btn.neutral { background-color: #e5e7eb; }
+
+        .title-bar {
+            background-color: var(--accent-blue);
+            border-bottom: 3px solid var(--border-color);
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            color: var(--border-color);
+            font-weight: bold;
+        }
+
+        .pixel-font { font-family: 'VT323', monospace; }
+        
+        /* 탭 활성화 스타일 */
+        .tab-active {
+            background-color: var(--window-bg) !important;
+            border-bottom: none !important;
+            position: relative;
+            top: 2px;
+        }
+
+        @keyframes flip {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        .loading-icon { animation: flip 2s infinite ease-in-out; }
+
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app" class="app-container">
+        
+        <!-- 1. 로그인/회원가입 화면 -->
+        <div id="auth-screen" class="flex flex-col gap-6 justify-center min-h-[80vh]">
+            <div class="retro-box p-0">
+                <div class="title-bar">
+                    <span>SYSTEM_LOGIN.EXE</span>
+                    <div class="flex gap-1">
+                        <div class="w-3 h-3 border border-black bg-white"></div>
+                        <div class="w-3 h-3 border border-black bg-white"></div>
+                    </div>
+                </div>
+                <div class="p-6 flex flex-col gap-4">
+                    <div class="text-center mb-4">
+                        <h1 class="text-3xl font-bold pixel-font">RETRO QUOTES</h1>
+                        <p class="text-sm text-gray-600">당신의 영감을 기록하세요</p>
+                    </div>
+
+                    <div class="flex gap-2 mb-2">
+                        <button onclick="switchAuthMode('login')" id="tab-login" class="retro-btn flex-1 bg-white">로그인</button>
+                        <button onclick="switchAuthMode('signup')" id="tab-signup" class="retro-btn flex-1 bg-gray-200">가입</button>
+                    </div>
+
+                    <form id="auth-form" onsubmit="handleAuth(event)">
+                        <div class="flex flex-col gap-3">
+                            <input type="email" id="email" placeholder="E-MAIL" class="retro-input" required>
+                            <input type="password" id="password" placeholder="PASSWORD" class="retro-input" required>
+                            
+                            <div id="signup-fields" class="hidden flex flex-col gap-3">
+                                <input type="text" id="nickname" placeholder="NICKNAME" class="retro-input">
+                                <input type="text" id="profileUrl" placeholder="PROFILE IMG URL" class="retro-input">
+                                <select id="userRole" class="retro-input">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="retro-btn primary w-full mt-4 h-12 text-lg">
+                                ENTER SYSTEM
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 메인 화면 (피드) -->
+        <div id="main-screen" class="hidden">
+            <header class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-2 shadow-[2px_2px_0px_rgba(0,0,0,1)]">QUOTES_FEED</h2>
+                <div class="flex gap-2">
+                    <button onclick="goToMyPage()" class="retro-btn success text-xs px-3 py-1">MY PAGE</button>
+                </div>
+            </header>
+
+            <div class="mb-6 retro-box p-2 flex gap-2">
+                <i data-lucide="search" class="w-6 h-6"></i>
+                <input type="text" placeholder="Search quotes..." class="bg-transparent outline-none w-full font-mono">
+            </div>
+
+            <div id="quotes-list" class="flex flex-col gap-6">
+                <!-- Data will be loaded here -->
+            </div>
+        </div>
+
+        <!-- 3. 마이페이지 화면 (New!) -->
+        <div id="mypage-screen" class="hidden">
+            <header class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-2 shadow-[2px_2px_0px_rgba(0,0,0,1)]">MY_PAGE</h2>
+                <div class="flex gap-2">
+                    <button onclick="showMainScreen()" class="retro-btn neutral text-xs px-2 py-1">HOME</button>
+                    <button onclick="logout()" class="retro-btn danger text-xs px-2 py-1">LOGOUT</button>
+                </div>
+            </header>
+
+            <!-- 프로필 섹션 -->
+            <div class="retro-box p-4 mb-6 flex items-center gap-4">
+                <div class="w-16 h-16 bg-gray-300 border-2 border-black overflow-hidden relative">
+                     <img id="my-profile-img" src="" onerror="this.src='https://via.placeholder.com/150'" class="w-full h-full object-cover hidden">
+                     <i data-lucide="user" class="w-8 h-8 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500"></i>
+                </div>
+                <div>
+                    <h3 id="my-nickname" class="text-xl font-bold pixel-font">LOADING...</h3>
+                    <p id="my-email" class="text-xs text-gray-500">user@email.com</p>
+                    <span id="my-role" class="text-[10px] bg-blue-200 px-1 border border-black mt-1 inline-block">USER</span>
+                </div>
+            </div>
+
+            <!-- 탭 메뉴 -->
+            <div class="flex border-b-2 border-black mb-4 px-2 gap-2">
+                <button onclick="switchMyPageTab('my-quotes')" id="btn-tab-my" class="retro-btn bg-gray-300 border-b-0 rounded-b-none px-4 py-2 text-sm">내가 쓴 글</button>
+                <button onclick="switchMyPageTab('likes')" id="btn-tab-likes" class="retro-btn bg-gray-300 border-b-0 rounded-b-none px-4 py-2 text-sm">좋아요</button>
+            </div>
+
+            <!-- 마이페이지 리스트 영역 -->
+            <div id="mypage-list" class="flex flex-col gap-4">
+                <!-- 여기에 내가 쓴 글이나 좋아요 목록이 렌더링됨 -->
+            </div>
+        </div>
+
+        <!-- 플로팅 버튼 -->
+        <button onclick="openModal()" id="fab-btn" class="hidden fixed bottom-6 right-6 w-14 h-14 bg-[#86efac] border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] flex items-center justify-center rounded-full hover:translate-y-1 transition-all z-50">
+            <i data-lucide="plus" class="w-8 h-8 text-black"></i>
+        </button>
+
+    </div>
+
+    <!-- 모달 -->
+    <div id="modal-overlay" class="fixed inset-0 bg-black/50 hidden z-[100] flex items-center justify-center p-4">
+        <div class="retro-box w-full max-w-md bg-[#fff1e6] animate-bounce-in relative">
+            <div class="title-bar bg-[#fca5a5]">
+                <span>NEW_QUOTE.TXT</span>
+                <button onclick="closeModal()" class="hover:bg-red-400 p-1"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            
+            <form id="quote-form" onsubmit="createQuote(event)" class="p-4 flex flex-col gap-3">
+                <label class="text-xs font-bold">SENTENCE</label>
+                <textarea id="q-sentence" rows="3" class="retro-input" placeholder="여기에 문장을 입력하세요..." required></textarea>
+                
+                <label class="text-xs font-bold">THOUGHT</label>
+                <textarea id="q-thought" rows="2" class="retro-input" placeholder="당신의 생각은?"></textarea>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-xs font-bold">AUTHOR</label>
+                        <input type="text" id="q-author" class="retro-input" placeholder="저자">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold">PAGE</label>
+                        <input type="number" id="q-page" class="retro-input" placeholder="페이지">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-xs font-bold">CATEGORY</label>
+                        <select id="q-category" class="retro-input">
+                            <option value="NOVEL">소설</option>
+                            <option value="POETRY">시</option>
+                            <option value="SCENARIO">시나리오</option>
+                            <option value="ESSAY">수필</option>
+                            <option value="PLAY">희곡</option>
+                            <option value="AUTOBIOGRAPHY">자서전</option>
+                            <option value="MEMOIR">회고록</option>
+                            <option value="CHILDREN_LITERATURE">아동문학</option>
+                            <option value="CRITICISM">문학비평</option>
+                        </select>
+                    </div>
+                    <div>
+                         <label class="text-xs font-bold">PUBLIC</label>
+                        <select id="q-public" class="retro-input">
+                            <option value="PUBLIC">공개</option>
+                            <option value="PRIVATE">비공개</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <label class="text-xs font-bold">TITLE (BOOK)</label>
+                <input type="text" id="q-title" class="retro-input" placeholder="책 제목" required>
+
+                <div class="flex gap-2 mt-4">
+                    <button type="button" onclick="closeModal()" class="retro-btn w-1/2">CANCEL</button>
+                    <button type="submit" class="retro-btn success w-1/2">SAVE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 토스트 알림 -->
+    <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-black text-white px-6 py-3 border-2 border-white shadow-lg hidden z-[200] pixel-font">
+        MESSAGE HERE
+    </div>
+
+    <script>
+        const API_BASE_URL = "http://localhost:8080"; 
+
+        // 상태 관리
+        let currentAuthMode = 'login';
+        let currentMyPageTab = 'my-quotes';
+        let token = localStorage.getItem('accessToken');
+        let myProfile = {}; // 내 정보 저장용
+
+        // 초기 실행
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            checkAuth();
+        });
+
+        // ==========================================
+        // 1. 인증 로직
+        // ==========================================
+        
+        function checkAuth() {
+            if (token) {
+                showMainScreen();
+                fetchQuotes();
+                fetchMyProfile(); // 로그인 시 내 정보 미리 가져오기
+            } else {
+                showAuthScreen();
+            }
+        }
+
+        function switchAuthMode(mode) {
+            currentAuthMode = mode;
+            const signupFields = document.getElementById('signup-fields');
+            const tabLogin = document.getElementById('tab-login');
+            const tabSignup = document.getElementById('tab-signup');
+            const btn = document.querySelector('#auth-form button');
+
+            if (mode === 'signup') {
+                signupFields.classList.remove('hidden');
+                tabSignup.classList.add('bg-white');
+                tabSignup.classList.remove('bg-gray-200');
+                tabLogin.classList.remove('bg-white');
+                tabLogin.classList.add('bg-gray-200');
+                btn.innerText = "REGISTER USER";
+            } else {
+                signupFields.classList.add('hidden');
+                tabLogin.classList.add('bg-white');
+                tabLogin.classList.remove('bg-gray-200');
+                tabSignup.classList.remove('bg-white');
+                tabSignup.classList.add('bg-gray-200');
+                btn.innerText = "ENTER SYSTEM";
+            }
+        }
+
+        async function handleAuth(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const endpoint = currentAuthMode === 'login' ? '/signin' : '/signup';
+            
+            const body = { email, password };
+            if (currentAuthMode === 'signup') {
+                body.nickname = document.getElementById('nickname').value;
+                body.profileUrl = document.getElementById('profileUrl').value;
+                body.userRole = document.getElementById('userRole').value;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                if (!res.ok) throw new Error('인증 실패!');
+                const data = await res.json();
+
+                if (currentAuthMode === 'signup') {
+                    showToast("회원가입 완료! 로그인하세요.");
+                    switchAuthMode('login');
+                } else {
+                    token = data.token; 
+                    localStorage.setItem('accessToken', token);
+                    showToast("시스템 접속 성공");
+                    checkAuth();
+                }
+            } catch (err) {
+                showToast(err.message);
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            token = null;
+            location.reload();
+        }
+
+        async function fetchMyProfile() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/users`, {
+                    headers: { 'Authorization': token }
+                });
+                if(res.ok) {
+                    myProfile = await res.json();
+                }
+            } catch(e) { console.error("프로필 로드 실패", e); }
+        }
+
+        // ==========================================
+        // 2. 인용구 관리 로직
+        // ==========================================
+
+        async function fetchQuotes() {
+            const listEl = document.getElementById('quotes-list');
+            try {
+                const res = await fetch(`${API_BASE_URL}/quotes`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                });
+                if (!res.ok) throw new Error("데이터를 불러올 수 없습니다.");
+                const data = await res.json();
+                renderQuotes(data.content, 'quotes-list');
+            } catch (err) {
+                listEl.innerHTML = `<div class="text-red-500 text-center p-4">ERROR: ${err.message}</div>`;
+            }
+        }
+
+        function renderQuotes(quotes, targetId) {
+            const listEl = document.getElementById(targetId);
+            listEl.innerHTML = '';
+
+            if (!quotes || quotes.length === 0) {
+                listEl.innerHTML = `<div class="text-center text-gray-500 py-10 pixel-font">NO DATA FOUND.</div>`;
+                return;
+            }
+
+            quotes.forEach(q => {
+                const date = new Date(q.createdAt).toLocaleDateString();
+                const item = document.createElement('div');
+                item.className = 'retro-box p-0 mb-4';
+                item.innerHTML = `
+                    <div class="title-bar bg-white !border-b-2">
+                        <span class="text-sm truncate max-w-[200px]">${q.title} (${q.pageNumber}p)</span>
+                        <div class="flex gap-2">
+                            <span class="text-xs bg-gray-200 px-1 border border-black">${q.category}</span>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-[#fff]">
+                        <p class="text-lg font-serif mb-4 leading-relaxed">"${q.sentence}"</p>
+                        ${q.thought ? `<div class="bg-[#f0f9ff] p-2 text-sm border-l-4 border-blue-400 mb-4 text-gray-600"><span class="font-bold mr-2">💭 THOUGHT:</span> ${q.thought}</div>` : ''}
+                        <div class="flex justify-between items-end border-t border-dashed border-gray-400 pt-3 mt-2">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-bold">@${q.nickname}</span>
+                                <span class="text-[10px] text-gray-500">${date}</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="likeQuote(${q.quoteId})" class="p-2 hover:bg-red-100 border border-transparent hover:border-black transition-all rounded-full"><i data-lucide="heart" class="w-4 h-4"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listEl.appendChild(item);
+            });
+            lucide.createIcons();
+        }
+
+        async function createQuote(e) {
+            e.preventDefault();
+            const body = {
+                title: document.getElementById('q-title').value,
+                author: document.getElementById('q-author').value,
+                category: document.getElementById('q-category').value,
+                pageNumber: parseInt(document.getElementById('q-page').value) || 0,
+                sentence: document.getElementById('q-sentence').value,
+                thought: document.getElementById('q-thought').value,
+                isPublic: document.getElementById('q-public').value
+            };
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/quotes`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token },
+                    body: JSON.stringify(body)
+                });
+                if (!res.ok) throw new Error("작성 실패!");
+                showToast("저장되었습니다!");
+                closeModal();
+                fetchQuotes();
+            } catch (err) { showToast(err.message); }
+        }
+
+        async function likeQuote(quoteId) {
+            try {
+                const res = await fetch(`${API_BASE_URL}/quotes/${quoteId}/likes`, {
+                    method: 'POST',
+                    headers: { 'Authorization': token, 'Content-Type': 'application/json' }
+                });
+                if(res.ok) showToast("이 글을 좋아합니다!");
+                else showToast("이미 좋아요를 눌렀거나 오류 발생!");
+            } catch(e) { showToast("통신 오류"); }
+        }
+
+        // ==========================================
+        // 3. 마이페이지 로직 (New!)
+        // ==========================================
+
+        async function goToMyPage() {
+            // UI 전환
+            document.getElementById('main-screen').classList.add('hidden');
+            document.getElementById('mypage-screen').classList.remove('hidden');
+            document.getElementById('fab-btn').classList.add('hidden'); // 마이페이지에선 글쓰기 버튼 숨김
+
+            // 프로필 정보 렌더링
+            if(myProfile.nickname) {
+                document.getElementById('my-nickname').innerText = myProfile.nickname;
+                document.getElementById('my-email').innerText = myProfile.email;
+                document.getElementById('my-role').innerText = myProfile.userRole;
+                if(myProfile.profileUrl) {
+                    const img = document.getElementById('my-profile-img');
+                    img.src = myProfile.profileUrl;
+                    img.classList.remove('hidden');
+                }
+            } else {
+                await fetchMyProfile(); // 없으면 다시 시도
+                goToMyPage(); // 재귀 호출로 다시 렌더링
+                return;
+            }
+
+            // 초기 탭 로드 (내가 쓴 글)
+            switchMyPageTab('my-quotes');
+        }
+
+        async function switchMyPageTab(tab) {
+            currentMyPageTab = tab;
+            const btnMy = document.getElementById('btn-tab-my');
+            const btnLikes = document.getElementById('btn-tab-likes');
+            const listEl = document.getElementById('mypage-list');
+
+            listEl.innerHTML = '<div class="text-center py-4"><i data-lucide="hourglass" class="w-6 h-6 animate-spin mx-auto"></i></div>';
+
+            // 탭 스타일 변경
+            if(tab === 'my-quotes') {
+                btnMy.classList.add('tab-active', 'bg-[#fff1e6]');
+                btnMy.classList.remove('bg-gray-300');
+                btnLikes.classList.remove('tab-active', 'bg-[#fff1e6]');
+                btnLikes.classList.add('bg-gray-300');
+                
+                // [내가 쓴 글 조회]
+                // API 명세에 검색 필터가 없으므로 전체를 가져와서 닉네임으로 필터링
+                try {
+                    const res = await fetch(`${API_BASE_URL}/quotes`, {
+                        headers: { 'Authorization': token }
+                    });
+                    const data = await res.json();
+                    // 내 닉네임과 같은 것만 필터링
+                    const myQuotes = data.content.filter(q => q.nickname === myProfile.nickname);
+                    renderQuotes(myQuotes, 'mypage-list');
+                } catch(e) {
+                    listEl.innerHTML = "데이터 로드 실패";
+                }
+
+            } else {
+                btnLikes.classList.add('tab-active', 'bg-[#fff1e6]');
+                btnLikes.classList.remove('bg-gray-300');
+                btnMy.classList.remove('tab-active', 'bg-[#fff1e6]');
+                btnMy.classList.add('bg-gray-300');
+
+                // [좋아요 한 글 조회]
+                try {
+                    const res = await fetch(`${API_BASE_URL}/likes`, {
+                        headers: { 'Authorization': token }
+                    });
+                    const data = await res.json(); // { content: [{quoteId, title, category}], ... }
+                    renderLikedQuotes(data.content);
+                } catch(e) {
+                    listEl.innerHTML = "데이터 로드 실패";
+                }
+            }
+        }
+
+        // 좋아요 목록은 API가 주는 정보(title, category)가 제한적이므로 UI를 다르게 그림
+        function renderLikedQuotes(likes) {
+            const listEl = document.getElementById('mypage-list');
+            listEl.innerHTML = '';
+            
+            if (!likes || likes.length === 0) {
+                listEl.innerHTML = `<div class="text-center text-gray-500 py-10 pixel-font">NO LIKES YET.</div>`;
+                return;
+            }
+
+            likes.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'retro-box p-3 bg-white flex justify-between items-center';
+                el.innerHTML = `
+                    <div class="flex flex-col">
+                        <span class="font-bold text-lg">${item.title}</span>
+                        <span class="text-xs bg-gray-200 px-1 border border-black w-fit">${item.category}</span>
+                    </div>
+                    <button class="retro-btn danger px-2 py-1 text-xs">VIEW</button>
+                `;
+                listEl.appendChild(el);
+            });
+        }
+
+        // ==========================================
+        // 4. UI 유틸리티
+        // ==========================================
+
+        function showAuthScreen() {
+            document.getElementById('auth-screen').classList.remove('hidden');
+            document.getElementById('main-screen').classList.add('hidden');
+            document.getElementById('mypage-screen').classList.add('hidden');
+            document.getElementById('fab-btn').classList.add('hidden');
+        }
+
+        function showMainScreen() {
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('mypage-screen').classList.add('hidden');
+            document.getElementById('main-screen').classList.remove('hidden');
+            document.getElementById('fab-btn').classList.remove('hidden');
+            fetchQuotes(); // 목록 갱신
+        }
+
+        function openModal() { document.getElementById('modal-overlay').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); document.getElementById('quote-form').reset(); }
+        
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+    </script>
+</body>
+</html>
