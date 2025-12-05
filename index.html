@@ -8,24 +8,96 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Noto+Sans+KR:wght@400;700&display=swap');
-        :root { --bg-color: #e0e7ff; --window-bg: #fff1e6; --border-color: #2d2d2d; --accent-blue: #93c5fd; --accent-red: #fca5a5; --accent-yellow: #fbbf24; }
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--bg-color); background-image: linear-gradient(var(--accent-blue) 1px, transparent 1px), linear-gradient(90deg, var(--accent-blue) 1px, transparent 1px); background-size: 20px 20px; color: var(--border-color); overflow-x: hidden; }
-        .retro-box { background-color: var(--window-bg); border: 3px solid var(--border-color); box-shadow: 6px 6px 0px rgba(0,0,0,0.8); border-radius: 0px; transition: transform 0.1s, box-shadow 0.1s; }
-        .retro-input { width: 100%; background: white; border: 2px solid var(--border-color); padding: 10px; font-family: 'VT323', monospace; font-size: 1.2rem; outline: none; box-shadow: inset 2px 2px 0px rgba(0,0,0,0.1); }
-        .retro-input:focus { background: #fff; box-shadow: inset 2px 2px 0px rgba(0,0,0,0.2); }
-        .retro-btn { background-color: var(--accent-yellow); border: 2px solid var(--border-color); padding: 8px 16px; font-weight: bold; text-transform: uppercase; cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
-        .retro-btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px var(--border-color); }
-        .retro-btn.primary { background-color: var(--accent-yellow); }
-        .retro-btn.danger { background-color: var(--accent-red); }
-        .retro-btn.success { background-color: #86efac; }
-        .retro-btn.neutral { background-color: #e5e7eb; }
-        .title-bar { background-color: var(--accent-blue); border-bottom: 3px solid var(--border-color); padding: 5px 10px; display: flex; justify-content: space-between; align-items: center; font-family: 'VT323', monospace; font-size: 1.2rem; color: var(--border-color); font-weight: bold; }
-        .pixel-font { font-family: 'VT323', monospace; }
-        .tab-active { background-color: var(--window-bg) !important; border-bottom: none !important; position: relative; top: 2px; }
+        @import url('https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css');
+
+        :root { 
+            --bg-color: #e0e7ff; 
+            --window-bg: #fff1e6; 
+            --border-color: #2d2d2d; 
+            --accent-blue: #93c5fd; 
+            --accent-red: #fca5a5; 
+            --accent-yellow: #fbbf24; 
+        }
+
+        body { 
+            font-family: 'Galmuri9', sans-serif; 
+            background-color: var(--bg-color); 
+            background-image: linear-gradient(var(--accent-blue) 1px, transparent 1px), linear-gradient(90deg, var(--accent-blue) 1px, transparent 1px); 
+            background-size: 20px 20px; 
+            color: var(--border-color); 
+            overflow-x: hidden; 
+        }
+
+        .retro-box { 
+            background-color: var(--window-bg); 
+            border: 3px solid var(--border-color); 
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.8); 
+            border-radius: 0px; 
+            transition: transform 0.1s, box-shadow 0.1s; 
+        }
+
+        .retro-input { 
+            width: 100%; 
+            background: #fff; 
+            border: 2px solid var(--border-color); 
+            padding: 8px; 
+            font-family: 'Galmuri9', monospace; 
+            font-size: 1rem; 
+            outline: none; 
+            box-shadow: inset 2px 2px 0px rgba(0,0,0,0.1), inset -1px -1px 0px rgba(255,255,255,0.5);
+        }
+        .retro-input:focus { 
+            background: #fdfce0; 
+            box-shadow: inset 2px 2px 0px rgba(0,0,0,0.2); 
+        }
+
+        .retro-btn { 
+            background-color: var(--accent-yellow); 
+            border: 2px solid var(--border-color); 
+            padding: 8px 16px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            box-shadow: 3px 3px 0px var(--border-color); 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 5px;
+            font-size: 0.9rem;
+            transition: all 0.1s;
+        }
+        .retro-btn:active { 
+            transform: translate(3px, 3px); 
+            box-shadow: 0px 0px 0px var(--border-color); 
+        }
+        .retro-btn.primary { background-color: var(--accent-yellow); color: black; }
+        .retro-btn.danger { background-color: var(--accent-red); color: black; }
+        .retro-btn.success { background-color: #86efac; color: black; }
+        .retro-btn.neutral { background-color: #e5e7eb; color: black; }
+
+        .title-bar { 
+            background: linear-gradient(90deg, var(--accent-blue), #bfdbfe);
+            border-bottom: 2px solid var(--border-color); 
+            padding: 6px 10px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-family: 'Galmuri9', monospace; 
+            font-size: 1.1rem; 
+            color: var(--border-color); 
+            font-weight: bold; 
+        }
+
+        .pixel-font { font-family: 'Galmuri9', monospace; }
+        .tab-active { background-color: var(--window-bg) !important; border-bottom: none !important; position: relative; top: 2px; z-index: 10; }
         @keyframes flip { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(180deg); } }
         .loading-icon { animation: flip 2s infinite ease-in-out; }
         .app-container { max-width: 500px; margin: 0 auto; min-height: 100vh; padding: 20px; padding-bottom: 80px; }
+        .cursor-pointer { cursor: pointer; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #e5e7eb; border-left: 2px solid #2d2d2d; }
+        ::-webkit-scrollbar-thumb { background: #2d2d2d; border: 1px solid #fff; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
 <body>
@@ -34,19 +106,22 @@
         <div id="auth-screen" class="flex flex-col gap-6 justify-center min-h-[80vh]">
             <div class="retro-box p-0">
                 <div class="title-bar"><span>SYSTEM_LOGIN.EXE</span><div class="flex gap-1"><div class="w-3 h-3 border border-black bg-white"></div><div class="w-3 h-3 border border-black bg-white"></div></div></div>
-                <div class="p-6 flex flex-col gap-4">
-                    <div class="text-center mb-4"><h1 class="text-3xl font-bold pixel-font">RETRO QUOTES</h1><p class="text-sm text-gray-600">당신의 영감을 기록하세요</p></div>
+                <div class="p-6 flex flex-col gap-4 bg-[#fdfbf7]">
+                    <div class="text-center mb-4">
+                        <h1 class="text-4xl font-bold pixel-font mb-2">RETRO QUOTES</h1>
+                        <p class="text-xs text-gray-500 tracking-tighter">YOUR DAILY INSPIRATION STORAGE</p>
+                    </div>
                     <div class="flex gap-2 mb-2">
                         <button onclick="switchAuthMode('login')" id="tab-login" class="retro-btn flex-1 bg-white">로그인</button>
                         <button onclick="switchAuthMode('signup')" id="tab-signup" class="retro-btn flex-1 bg-gray-200">가입</button>
                     </div>
                     <form id="auth-form" onsubmit="handleAuth(event)">
-                        <div class="flex flex-col gap-3">
-                            <input type="email" id="email" placeholder="E-MAIL" class="retro-input" required>
-                            <input type="password" id="password" placeholder="PASSWORD" class="retro-input" required>
-                            <div id="signup-fields" class="hidden flex flex-col gap-3">
-                                <input type="text" id="nickname" placeholder="NICKNAME" class="retro-input">
-                                <input type="text" id="profileUrl" placeholder="PROFILE IMG URL" class="retro-input">
+                        <div class="flex flex-col gap-4">
+                            <div><label class="text-[10px] font-bold mb-1 block">EMAIL</label><input type="email" id="email" class="retro-input" required></div>
+                            <div><label class="text-[10px] font-bold mb-1 block">PASSWORD</label><input type="password" id="password" class="retro-input" required></div>
+                            <div id="signup-fields" class="hidden flex flex-col gap-4">
+                                <div><label class="text-[10px] font-bold mb-1 block">NICKNAME</label><input type="text" id="nickname" class="retro-input"></div>
+                                <div><label class="text-[10px] font-bold mb-1 block">PROFILE URL</label><input type="text" id="profileUrl" class="retro-input"></div>
                             </div>
                             <button type="submit" class="retro-btn primary w-full mt-4 h-12 text-lg">ENTER SYSTEM</button>
                         </div>
@@ -58,147 +133,182 @@
         <!-- 2. 메인 피드 -->
         <div id="main-screen" class="hidden">
             <header class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-2 shadow-[2px_2px_0px_rgba(0,0,0,1)]">QUOTES_FEED</h2>
+                <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-3 py-1 shadow-[3px_3px_0px_rgba(0,0,0,1)]">QUOTES_FEED</h2>
                 <button onclick="goToMyPage()" class="retro-btn success text-xs px-3 py-1">MY PAGE</button>
             </header>
-            <div class="mb-6 retro-box p-2 flex gap-2"><i data-lucide="search" class="w-6 h-6"></i><input type="text" placeholder="Search quotes..." class="bg-transparent outline-none w-full font-mono"></div>
+            <div class="mb-6 retro-box p-2 flex gap-2 bg-white items-center">
+                <i data-lucide="search" class="w-5 h-5 ml-1"></i>
+                <input type="text" placeholder="Search quotes..." class="bg-transparent outline-none w-full font-mono text-sm ml-2">
+            </div>
             <div id="quotes-list" class="flex flex-col gap-6"></div>
         </div>
 
         <!-- 3. 마이페이지 -->
         <div id="mypage-screen" class="hidden">
             <header class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-2 shadow-[2px_2px_0px_rgba(0,0,0,1)]">MY_PAGE</h2>
+                <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-3 py-1 shadow-[3px_3px_0px_rgba(0,0,0,1)]">MY_PAGE</h2>
                 <div class="flex gap-2"><button onclick="showMainScreen()" class="retro-btn neutral text-xs px-2 py-1">HOME</button><button onclick="logout()" class="retro-btn danger text-xs px-2 py-1">LOGOUT</button></div>
             </header>
-            <div class="retro-box p-4 mb-6 flex items-center gap-4">
-                <div class="w-16 h-16 bg-gray-300 border-2 border-black overflow-hidden relative">
+            <div class="retro-box p-4 mb-6 flex items-center gap-4 bg-[#fdfbf7]">
+                <div class="w-20 h-20 bg-gray-200 border-2 border-black overflow-hidden relative shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">
                      <img id="my-profile-img" src="" onerror="this.src='https://via.placeholder.com/150'" class="w-full h-full object-cover hidden">
-                     <i data-lucide="user" class="w-8 h-8 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500"></i>
+                     <i data-lucide="user" class="w-8 h-8 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-400"></i>
                 </div>
-                <div><h3 id="my-nickname" class="text-xl font-bold pixel-font">LOADING...</h3><p id="my-email" class="text-xs text-gray-500">user@email.com</p><span id="my-role" class="text-[10px] bg-blue-200 px-1 border border-black mt-1 inline-block">USER</span></div>
+                <div>
+                    <h3 id="my-nickname" class="text-xl font-bold pixel-font mb-1">LOADING...</h3>
+                    <p id="my-email" class="text-xs text-gray-500 font-mono mb-2">user@email.com</p>
+                    <span id="my-role" class="text-[10px] bg-blue-100 px-2 py-0.5 border border-black inline-block font-bold">USER</span>
+                </div>
             </div>
             <div class="flex border-b-2 border-black mb-4 px-2 gap-2">
-                <button onclick="switchMyPageTab('my-quotes')" id="btn-tab-my" class="retro-btn bg-gray-300 border-b-0 rounded-b-none px-4 py-2 text-sm">내가 쓴 글</button>
-                <button onclick="switchMyPageTab('likes')" id="btn-tab-likes" class="retro-btn bg-gray-300 border-b-0 rounded-b-none px-4 py-2 text-sm">좋아요</button>
+                <button onclick="switchMyPageTab('my-quotes')" id="btn-tab-my" class="retro-btn bg-gray-300 border-b-0 rounded-b-none px-4 py-2 text-sm shadow-none">내가 쓴 글</button>
+                <button onclick="switchMyPageTab('likes')" id="btn-tab-likes" class="retro-btn bg-gray-300 border-b-0 rounded-b-none px-4 py-2 text-sm shadow-none">좋아요</button>
             </div>
             <div id="mypage-list" class="flex flex-col gap-4"></div>
         </div>
 
-        <!-- 글쓰기 버튼 -->
-        <button onclick="openModal()" id="fab-btn" class="hidden fixed bottom-6 right-6 w-14 h-14 bg-[#86efac] border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] flex items-center justify-center rounded-full hover:translate-y-1 transition-all z-50"><i data-lucide="plus" class="w-8 h-8 text-black"></i></button>
+        <!-- 4. 타 유저 프로필 -->
+        <div id="user-profile-screen" class="hidden">
+            <header class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-3 py-1 shadow-[3px_3px_0px_rgba(0,0,0,1)]">USER_PROFILE</h2>
+                <button onclick="showMainScreen()" class="retro-btn neutral text-xs px-2 py-1">HOME</button>
+            </header>
+            <div class="retro-box p-4 mb-6 flex items-center gap-4 bg-[#fdfbf7]">
+                <div class="w-20 h-20 bg-gray-200 border-2 border-black overflow-hidden relative shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">
+                     <img id="other-profile-img" src="" onerror="this.src='https://via.placeholder.com/150'" class="w-full h-full object-cover hidden">
+                     <i data-lucide="user" class="w-8 h-8 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <div>
+                    <h3 id="other-nickname" class="text-xl font-bold pixel-font mb-1">LOADING...</h3>
+                    <p id="other-email" class="text-xs text-gray-500 font-mono">...</p>
+                    <span id="other-role" class="text-[10px] bg-blue-100 px-2 py-0.5 border border-black mt-2 inline-block font-bold">USER</span>
+                </div>
+            </div>
+            <div class="border-b-2 border-black mb-4 px-2">
+                <span class="inline-block bg-[#fff1e6] border-2 border-b-0 border-black px-4 py-2 text-sm font-bold relative top-[2px]">작성한 글</span>
+            </div>
+            <div id="other-user-quotes-list" class="flex flex-col gap-4"></div>
+        </div>
+
+        <button onclick="openModal()" id="fab-btn" class="hidden fixed bottom-6 right-6 w-14 h-14 bg-[#86efac] border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:translate-y-1 transition-all z-50 active:shadow-none active:translate-y-[4px]"><i data-lucide="plus" class="w-8 h-8 text-black"></i></button>
     </div>
 
-    <!-- 모달 -->
-    <div id="modal-overlay" class="fixed inset-0 bg-black/50 hidden z-[100] flex items-center justify-center p-4">
+    <!-- 5. 글쓰기 모달 -->
+    <div id="modal-overlay" class="fixed inset-0 bg-black/50 hidden z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="retro-box w-full max-w-md bg-[#fff1e6] animate-bounce-in relative">
-            <div class="title-bar bg-[#fca5a5]"><span>NEW_QUOTE.TXT</span><button onclick="closeModal()" class="hover:bg-red-400 p-1"><i data-lucide="x" class="w-4 h-4"></i></button></div>
-            <form id="quote-form" onsubmit="createQuote(event)" class="p-4 flex flex-col gap-3">
-                <label class="text-xs font-bold">SENTENCE</label><textarea id="q-sentence" rows="3" class="retro-input" placeholder="여기에 문장을 입력하세요..." required></textarea>
-                <label class="text-xs font-bold">THOUGHT</label><textarea id="q-thought" rows="2" class="retro-input" placeholder="당신의 생각은?"></textarea>
-                <div class="grid grid-cols-2 gap-2"><div><label class="text-xs font-bold">AUTHOR</label><input type="text" id="q-author" class="retro-input" placeholder="저자"></div><div><label class="text-xs font-bold">PAGE</label><input type="number" id="q-page" class="retro-input" placeholder="페이지"></div></div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div><label class="text-xs font-bold">CATEGORY</label><select id="q-category" class="retro-input"><option value="NOVEL">소설</option><option value="POETRY">시</option><option value="SCENARIO">시나리오</option><option value="ESSAY">수필</option><option value="PLAY">희곡</option><option value="AUTOBIOGRAPHY">자서전</option><option value="MEMOIR">회고록</option><option value="CHILDREN_LITERATURE">아동문학</option><option value="CRITICISM">문학비평</option></select></div>
-                    <div><label class="text-xs font-bold">PUBLIC</label><select id="q-public" class="retro-input"><option value="PUBLIC">공개</option><option value="PRIVATE">비공개</option></select></div>
+            <div class="title-bar bg-[#fca5a5]"><span>NEW_QUOTE.TXT</span><button onclick="closeModal()" class="hover:bg-red-400 p-1 border border-transparent hover:border-black transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+            <form id="quote-form" onsubmit="createQuote(event)" class="p-5 flex flex-col gap-4">
+                <div>
+                    <label class="text-[10px] font-bold mb-1 block">TITLE (BOOK)</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="q-title" class="retro-input" placeholder="책 제목" required>
+                        <button type="button" onclick="openBookSearchModal()" class="retro-btn neutral whitespace-nowrap px-3"><i data-lucide="search" class="w-4 h-4"></i></button>
+                    </div>
                 </div>
-                <label class="text-xs font-bold">TITLE (BOOK)</label><input type="text" id="q-title" class="retro-input" placeholder="책 제목" required>
-                <div class="flex gap-2 mt-4"><button type="button" onclick="closeModal()" class="retro-btn w-1/2">CANCEL</button><button type="submit" class="retro-btn success w-1/2">SAVE</button></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-[10px] font-bold mb-1 block">AUTHOR</label><input type="text" id="q-author" class="retro-input" placeholder="저자"></div>
+                    <div><label class="text-[10px] font-bold mb-1 block">PAGE</label><input type="number" id="q-page" class="retro-input" placeholder="0"></div>
+                </div>
+                <div><label class="text-[10px] font-bold mb-1 block">SENTENCE</label><textarea id="q-sentence" rows="3" class="retro-input" placeholder="여기에 문장을 입력하세요..." required></textarea></div>
+                <div><label class="text-[10px] font-bold mb-1 block">THOUGHT</label><textarea id="q-thought" rows="2" class="retro-input" placeholder="당신의 생각은?"></textarea></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[10px] font-bold mb-1 block">CATEGORY</label>
+                        <select id="q-category" class="retro-input"><option value="NOVEL">소설</option><option value="POETRY">시</option><option value="SCENARIO">시나리오</option><option value="ESSAY">수필</option><option value="PLAY">희곡</option><option value="AUTOBIOGRAPHY">자서전</option><option value="MEMOIR">회고록</option><option value="CHILDREN_LITERATURE">아동문학</option><option value="CRITICISM">문학비평</option></select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold mb-1 block">PUBLIC</label>
+                        <select id="q-public" class="retro-input"><option value="PUBLIC">공개</option><option value="PRIVATE">비공개</option></select>
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4 pt-2 border-t-2 border-dashed border-gray-300"><button type="button" onclick="closeModal()" class="retro-btn w-1/2">CANCEL</button><button type="submit" class="retro-btn success w-1/2">SAVE</button></div>
             </form>
         </div>
     </div>
-    <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-black text-white px-6 py-3 border-2 border-white shadow-lg hidden z-[200] pixel-font">MESSAGE HERE</div>
+
+    <!-- 6. 책 검색 모달 -->
+    <div id="book-search-overlay" class="fixed inset-0 bg-black/60 hidden z-[150] flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="retro-box w-full max-w-lg bg-[#e0e7ff] animate-bounce-in relative flex flex-col h-[80vh]">
+            <div class="title-bar bg-[#93c5fd]"><span>SEARCH_BOOK.EXE</span><button onclick="closeBookSearchModal()" class="hover:bg-blue-400 p-1 border border-transparent hover:border-black"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+            <div class="p-4 flex flex-col gap-4 flex-1 overflow-hidden">
+                <div class="flex gap-2">
+                    <input type="text" id="book-search-input" class="retro-input" placeholder="책 제목을 검색하세요..." onkeydown="if(event.key === 'Enter') searchBooks(1)">
+                    <button onclick="searchBooks(1)" class="retro-btn primary">검색</button>
+                </div>
+                <div id="book-list" class="flex-1 overflow-y-auto border-2 border-black bg-white p-2 space-y-2 box-inner-shadow">
+                    <div class="text-center text-gray-500 py-10">검색어를 입력하세요.</div>
+                </div>
+                <div class="flex justify-between items-center bg-gray-200 p-2 border-2 border-black">
+                    <button onclick="changeBookPage(-1)" id="btn-prev-page" class="retro-btn neutral text-xs" disabled>PREV</button>
+                    <span id="current-page-display" class="font-bold pixel-font">PAGE 1</span>
+                    <button onclick="changeBookPage(1)" id="btn-next-page" class="retro-btn neutral text-xs" disabled>NEXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-black text-white px-6 py-3 border-2 border-white shadow-[4px_4px_0px_rgba(255,255,255,1)] hidden z-[200] pixel-font text-center">MESSAGE HERE</div>
 
     <script>
         const API_BASE_URL = "http://localhost:8080"; 
         let currentAuthMode = 'login', currentMyPageTab = 'my-quotes', token = localStorage.getItem('accessToken'), myProfile = {};
+        let currentViewingUserId = null, currentBookPage = 1, currentBookQuery = "", isBookEnd = false;
 
         document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); checkAuth(); });
 
-        // ===============================================
-        // [New] 인증 래퍼 함수 (Interceptor 역할)
-        // ===============================================
+        // [수정됨] 401 에러 처리 강화
         async function fetchWithAuth(url, options = {}) {
-            // 헤더 자동 병합
-            const headers = {
-                'Content-Type': 'application/json',
-                'Authorization': token, // 현재 토큰 사용
-                ...options.headers
-            };
-
+            const headers = { 'Content-Type': 'application/json', 'Authorization': token, ...options.headers };
             try {
                 const response = await fetch(`${API_BASE_URL}${url}`, { ...options, headers });
-
-                // [핵심] 401 만료 에러 감지 로직
+                
+                // [핵심] 401 상태코드가 오면 무조건 만료 처리 (메시지 검사 X)
                 if (response.status === 401) {
-                    // 응답 본문을 읽어서 에러 메시지 확인
-                    // (clone()을 쓰는 이유는 response body는 한 번 읽으면 사라지기 때문)
-                    const errorText = await response.clone().text(); 
-                    
-                    if (errorText.includes("Expired") || errorText.includes("만료된")) {
-                        showToast("⚠️ 인증 세션이 만료되었습니다. 다시 로그인해주세요.");
-                        
-                        // 2초 뒤 로그아웃 처리 (토스트 메시지 읽을 시간 확보)
-                        setTimeout(() => {
-                            logout(); 
-                        }, 2000);
-                        
-                        // 더 이상 진행하지 않도록 에러 throw
-                        throw new Error("TOKEN_EXPIRED");
-                    }
+                    showToast("⚠️ 인증 세션이 만료되었습니다. 다시 로그인해주세요.");
+                    setTimeout(() => { logout(); }, 2000);
+                    throw new Error("TOKEN_EXPIRED");
                 }
                 return response;
-            } catch (err) {
-                // TOKEN_EXPIRED 에러는 이미 처리했으므로 조용히 넘기거나 상위로 전파
-                throw err;
-            }
+            } catch (err) { throw err; }
         }
 
         // 1. Auth Logic
         function checkAuth() { if (token) { showMainScreen(); fetchQuotes(); fetchMyProfile(); } else { showAuthScreen(); } }
-        
         function switchAuthMode(mode) {
             currentAuthMode = mode;
             const signup = document.getElementById('signup-fields'), tabLogin = document.getElementById('tab-login'), tabSignup = document.getElementById('tab-signup'), btn = document.querySelector('#auth-form button');
-            if (mode === 'signup') { 
-                signup.classList.remove('hidden'); 
-                tabSignup.classList.add('bg-white'); tabSignup.classList.remove('bg-gray-200'); 
-                tabLogin.classList.remove('bg-white'); tabLogin.classList.add('bg-gray-200'); 
-                btn.innerText = "REGISTER USER"; 
-            } 
-            else { 
-                signup.classList.add('hidden'); 
-                tabLogin.classList.add('bg-white'); tabLogin.classList.remove('bg-gray-200'); 
-                tabSignup.classList.remove('bg-white'); tabSignup.classList.add('bg-gray-200'); 
-                btn.innerText = "ENTER SYSTEM"; 
-            }
+            if (mode === 'signup') { signup.classList.remove('hidden'); tabSignup.classList.add('bg-white'); tabSignup.classList.remove('bg-gray-200'); tabLogin.classList.remove('bg-white'); tabLogin.classList.add('bg-gray-200'); btn.innerText = "REGISTER USER"; } 
+            else { signup.classList.add('hidden'); tabLogin.classList.add('bg-white'); tabLogin.classList.remove('bg-gray-200'); tabSignup.classList.remove('bg-white'); tabSignup.classList.add('bg-gray-200'); btn.innerText = "ENTER SYSTEM"; }
         }
-
         async function handleAuth(e) {
             e.preventDefault();
             const email = document.getElementById('email').value, password = document.getElementById('password').value, endpoint = currentAuthMode === 'login' ? '/signin' : '/signup';
             const body = { email, password };
-            
-            if (currentAuthMode === 'signup') { 
-                body.nickname = document.getElementById('nickname').value; 
-                body.profileUrl = document.getElementById('profileUrl').value; 
-                body.userRole = 'USER'; 
-            }
+            if (currentAuthMode === 'signup') { body.nickname = document.getElementById('nickname').value; body.profileUrl = document.getElementById('profileUrl').value; body.userRole = 'USER'; }
             try {
-                // 로그인은 토큰 없이 하는 요청이므로 그냥 fetch 사용
                 const res = await fetch(`${API_BASE_URL}${endpoint}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-                if (!res.ok) throw new Error('인증 실패! 이메일/비번을 확인하세요.');
+                if (!res.ok) throw new Error('인증 실패!');
                 const data = await res.json();
                 if (currentAuthMode === 'signup') { showToast("회원가입 완료! 로그인하세요."); switchAuthMode('login'); } 
                 else { token = data.token; localStorage.setItem('accessToken', token); showToast("시스템 접속 성공"); checkAuth(); }
             } catch (err) { showToast(err.message); }
         }
         function logout() { localStorage.clear(); token = null; location.reload(); }
-        
-        // [수정됨] fetch -> fetchWithAuth 사용
-        async function fetchMyProfile() { try { const res = await fetchWithAuth(`/users`, {}); if(res.ok) myProfile = await res.json(); } catch(e) {} }
 
-        // 2. Quotes Logic
-        // [수정됨] fetch -> fetchWithAuth 사용
+        async function fetchMyProfile() { 
+            try { 
+                const res = await fetchWithAuth(`/users`, { method: 'GET' }); 
+                if(res.ok) {
+                    myProfile = await res.json(); 
+                    return true; 
+                }
+            } catch(e) { 
+                // TOKEN_EXPIRED는 fetchWithAuth에서 이미 throw 했으므로 여기서 무시
+                if (e.message !== "TOKEN_EXPIRED") console.error(e); 
+            }
+            return false;
+        }
+
         async function fetchQuotes() {
             try {
                 const res = await fetchWithAuth(`/quotes`, { method: 'GET' });
@@ -206,6 +316,7 @@
                 const data = await res.json();
                 renderQuotes(data.content, 'quotes-list');
             } catch (err) { 
+                // [수정됨] TOKEN_EXPIRED가 아닐 때만 에러 메시지 표시
                 if(err.message !== "TOKEN_EXPIRED") document.getElementById('quotes-list').innerHTML = `<div class="text-red-500 text-center p-4">ERROR: ${err.message}</div>`; 
             }
         }
@@ -225,17 +336,23 @@
                 item.className = 'retro-box p-0 mb-4';
                 item.innerHTML = `
                     <div class="title-bar bg-white !border-b-2">
-                        <span class="text-sm truncate max-w-[200px]">${q.title} (${q.pageNumber}p)</span>
-                        <div class="flex gap-2"><span class="text-xs bg-gray-200 px-1 border border-black">${q.category}</span></div>
+                        <div class="flex items-center min-w-0 flex-1 mr-2">
+                            <span class="text-sm truncate font-bold" title="${q.title}">${q.title}</span>
+                            <span class="text-xs whitespace-nowrap flex-shrink-0 ml-1">(${q.pageNumber}p)</span>
+                        </div>
+                        <div class="flex gap-2 flex-shrink-0"><span class="text-[10px] bg-gray-200 px-1 border border-black">${q.category}</span></div>
                     </div>
                     <div class="p-4 bg-[#fff]">
-                        <p class="text-lg font-serif mb-4 leading-relaxed">"${q.sentence}"</p>
-                        ${q.thought ? `<div class="bg-[#f0f9ff] p-2 text-sm border-l-4 border-blue-400 mb-4 text-gray-600"><span class="font-bold mr-2">💭 THOUGHT:</span> ${q.thought}</div>` : ''}
-                        <div class="flex justify-between items-end border-t border-dashed border-gray-400 pt-3 mt-2">
-                            <div class="flex flex-col"><span class="text-xs font-bold">@${q.nickname}</span><span class="text-[10px] text-gray-500">${date}</span></div>
+                        <p class="text-lg mb-4 leading-relaxed tracking-wide">"${q.sentence}"</p>
+                        ${q.thought ? `<div class="bg-[#f0f9ff] p-3 text-sm border-2 border-dashed border-blue-300 mb-4 text-gray-600"><span class="font-bold mr-2 text-blue-500">💭 THOUGHT:</span> ${q.thought}</div>` : ''}
+                        <div class="flex justify-between items-end border-t-2 border-dotted border-gray-300 pt-3 mt-2">
+                            <div class="flex flex-col">
+                                <span onclick="goToUserProfile(${q.userId})" class="text-xs font-bold cursor-pointer hover:underline text-blue-800">@${q.nickname}</span>
+                                <span class="text-[10px] text-gray-500 font-mono">${date}</span>
+                            </div>
                             <div class="flex gap-2 items-center">
-                                <span class="text-xs font-bold text-gray-500">${likeCount > 0 ? likeCount : ''}</span>
-                                <button onclick="toggleLike(${q.id}, ${myLikeId})" class="p-2 hover:bg-red-100 border border-transparent hover:border-black transition-all rounded-full">
+                                <span class="text-xs font-bold text-gray-500 pixel-font">${likeCount > 0 ? likeCount : ''}</span>
+                                <button onclick="toggleLike(${q.id}, ${myLikeId})" class="p-2 hover:bg-red-100 border border-transparent hover:border-black transition-all rounded-full active:scale-90">
                                     <i data-lucide="heart" class="w-4 h-4 ${heartClass}"></i>
                                 </button>
                             </div>
@@ -247,7 +364,6 @@
             lucide.createIcons();
         }
 
-        // [수정됨] fetch -> fetchWithAuth 사용
         async function toggleLike(quoteId, myLikeId) {
             try {
                 let res;
@@ -258,24 +374,14 @@
                     res = await fetchWithAuth(`/quotes/${quoteId}/likes`, { method: 'POST' });
                     if(res.ok) showToast("이 글을 좋아합니다!");
                 }
-
                 if (!res.ok) throw new Error("작업 실패");
                 
-                if(!document.getElementById('main-screen').classList.contains('hidden')) {
-                    fetchQuotes();
-                } else {
-                    switchMyPageTab(currentMyPageTab);
-                }
-
-            } catch(e) { 
-                if(e.message !== "TOKEN_EXPIRED") {
-                    showToast("오류가 발생했습니다."); 
-                    console.error(e); 
-                }
-            }
+                if(!document.getElementById('main-screen').classList.contains('hidden')) fetchQuotes();
+                else if (!document.getElementById('mypage-screen').classList.contains('hidden')) switchMyPageTab(currentMyPageTab);
+                else if (!document.getElementById('user-profile-screen').classList.contains('hidden') && currentViewingUserId) loadOtherUserQuotes(currentViewingUserId);
+            } catch(e) { if(e.message !== "TOKEN_EXPIRED") { showToast("오류가 발생했습니다."); console.error(e); } }
         }
 
-        // [수정됨] fetch -> fetchWithAuth 사용
         async function createQuote(e) {
             e.preventDefault();
             const body = {
@@ -286,72 +392,138 @@
                 const res = await fetchWithAuth(`/quotes`, { method: 'POST', body: JSON.stringify(body) });
                 if (!res.ok) throw new Error("작성 실패!");
                 showToast("저장되었습니다!"); closeModal(); fetchQuotes();
-            } catch (err) { 
-                if(err.message !== "TOKEN_EXPIRED") showToast(err.message); 
-            }
+            } catch (err) { if(err.message !== "TOKEN_EXPIRED") showToast(err.message); }
         }
 
-        // 3. MyPage Logic
-        async function goToMyPage() {
-            document.getElementById('main-screen').classList.add('hidden'); document.getElementById('mypage-screen').classList.remove('hidden'); document.getElementById('fab-btn').classList.add('hidden');
-            if(myProfile.nickname) { document.getElementById('my-nickname').innerText = myProfile.nickname; document.getElementById('my-email').innerText = myProfile.email; document.getElementById('my-role').innerText = myProfile.userRole; if(myProfile.profileUrl) document.getElementById('my-profile-img').src = myProfile.profileUrl; }
-            else { await fetchMyProfile(); goToMyPage(); return; }
-            switchMyPageTab('my-quotes');
+        function openBookSearchModal() {
+            document.getElementById('book-search-overlay').classList.remove('hidden');
+            currentBookPage = 1; currentBookQuery = "";
+            document.getElementById('book-search-input').value = "";
+            document.getElementById('book-list').innerHTML = '<div class="text-center text-gray-500 py-10">검색어를 입력하세요.</div>';
+            updateBookPaginationButtons();
         }
-        
+        function closeBookSearchModal() { document.getElementById('book-search-overlay').classList.add('hidden'); }
+        async function searchBooks(page) {
+            const query = document.getElementById('book-search-input').value;
+            if (!query) { showToast("검색어를 입력하세요."); return; }
+            currentBookQuery = query; currentBookPage = page;
+            const listEl = document.getElementById('book-list');
+            listEl.innerHTML = '<div class="text-center py-10"><i data-lucide="hourglass" class="w-8 h-8 animate-spin mx-auto"></i></div>';
+            try {
+                const params = new URLSearchParams({ query: currentBookQuery, page: currentBookPage.toString() });
+                const res = await fetchWithAuth(`/books?${params.toString()}`, { method: 'GET' });
+                if (!res.ok) throw new Error("검색 실패");
+                const data = await res.json();
+                isBookEnd = data.meta.is_end; renderBooks(data.documents); updateBookPaginationButtons();
+            } catch(e) { if(e.message !== "TOKEN_EXPIRED") listEl.innerHTML = '<div class="text-center text-red-500 py-10">검색 중 오류가 발생했습니다.</div>'; }
+        }
+        function renderBooks(books) {
+            const listEl = document.getElementById('book-list'); listEl.innerHTML = '';
+            if (!books || books.length === 0) { listEl.innerHTML = '<div class="text-center text-gray-500 py-10">검색 결과가 없습니다.</div>'; return; }
+            books.forEach(book => {
+                const authors = book.authors.join(', '); const thumbnail = book.thumbnail ? book.thumbnail : 'https://via.placeholder.com/100x150?text=No+Img';
+                const bookItem = document.createElement('div');
+                bookItem.className = 'flex gap-3 p-2 border-b-2 border-dashed border-gray-300 hover:bg-yellow-50 cursor-pointer transition-colors active:bg-yellow-100';
+                bookItem.onclick = () => selectBook(book.title, authors);
+                bookItem.innerHTML = `<img src="${thumbnail}" class="w-16 h-20 object-cover border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.5)]"><div class="flex flex-col justify-center"><span class="font-bold text-sm line-clamp-1">${book.title}</span><span class="text-xs text-gray-600 line-clamp-1">${authors}</span><span class="text-[10px] text-gray-400 mt-1 font-mono">${book.publisher}</span></div>`;
+                listEl.appendChild(bookItem);
+            });
+        }
+        function selectBook(title, author) { document.getElementById('q-title').value = title; document.getElementById('q-author').value = author; closeBookSearchModal(); showToast("책 정보가 입력되었습니다."); }
+        function changeBookPage(delta) { const newPage = currentBookPage + delta; if (newPage < 1) return; searchBooks(newPage); }
+        function updateBookPaginationButtons() {
+            document.getElementById('current-page-display').innerText = `PAGE ${currentBookPage}`;
+            document.getElementById('btn-prev-page').disabled = (currentBookPage <= 1); document.getElementById('btn-next-page').disabled = isBookEnd;
+            const prevBtn = document.getElementById('btn-prev-page'), nextBtn = document.getElementById('btn-next-page');
+            prevBtn.style.opacity = prevBtn.disabled ? '0.5' : '1'; nextBtn.style.opacity = nextBtn.disabled ? '0.5' : '1';
+        }
+        async function goToUserProfile(userId) {
+            currentViewingUserId = userId; document.getElementById('main-screen').classList.add('hidden'); document.getElementById('mypage-screen').classList.add('hidden'); document.getElementById('user-profile-screen').classList.remove('hidden'); document.getElementById('fab-btn').classList.add('hidden');
+            const listEl = document.getElementById('other-user-quotes-list'); listEl.innerHTML = '<div class="text-center py-4"><i data-lucide="hourglass" class="w-6 h-6 animate-spin mx-auto"></i></div>';
+            try {
+                const userRes = await fetchWithAuth(`/users/${userId}`, { method: 'GET' });
+                if(!userRes.ok) throw new Error("유저 정보 로드 실패");
+                const userInfo = await userRes.json();
+                document.getElementById('other-nickname').innerText = userInfo.nickname; document.getElementById('other-email').innerText = userInfo.email; document.getElementById('other-role').innerText = userInfo.userRole;
+                const img = document.getElementById('other-profile-img'); if(userInfo.profileUrl) { img.src = userInfo.profileUrl; img.classList.remove('hidden'); } else { img.classList.add('hidden'); }
+                await loadOtherUserQuotes(userId);
+            } catch(e) { if(e.message !== "TOKEN_EXPIRED") { showToast("정보를 불러올 수 없습니다."); listEl.innerHTML = "로드 실패"; } }
+        }
+        async function loadOtherUserQuotes(userId) {
+            try {
+                const quotesRes = await fetchWithAuth(`/users/${userId}/quotes`, { method: 'GET' });
+                if(!quotesRes.ok) throw new Error("글 목록 로드 실패");
+                const quotesData = await quotesRes.json();
+                renderQuotes(quotesData.content, 'other-user-quotes-list');
+            } catch(e) { console.error(e); }
+        }
         async function switchMyPageTab(tab) {
             currentMyPageTab = tab;
             const btnMy = document.getElementById('btn-tab-my'), btnLikes = document.getElementById('btn-tab-likes'), listEl = document.getElementById('mypage-list');
             listEl.innerHTML = '<div class="text-center py-4"><i data-lucide="hourglass" class="w-6 h-6 animate-spin mx-auto"></i></div>';
-            
-            // [수정됨] fetch -> fetchWithAuth 사용
             if(tab === 'my-quotes') {
                 btnMy.classList.add('tab-active', 'bg-[#fff1e6]'); btnMy.classList.remove('bg-gray-300'); btnLikes.classList.remove('tab-active', 'bg-[#fff1e6]'); btnLikes.classList.add('bg-gray-300');
-                try { const res = await fetchWithAuth(`/quotes`, { method: 'GET' }); const data = await res.json(); const myQuotes = data.content.filter(q => q.nickname === myProfile.nickname); renderQuotes(myQuotes, 'mypage-list'); } 
-                catch(e) { if(e.message !== "TOKEN_EXPIRED") listEl.innerHTML = "로드 실패"; }
+                try { const res = await fetchWithAuth(`/quotes`, { method: 'GET' }); const data = await res.json(); const myQuotes = data.content.filter(q => q.nickname === myProfile.nickname); renderQuotes(myQuotes, 'mypage-list'); } catch(e) { if(e.message !== "TOKEN_EXPIRED") listEl.innerHTML = "로드 실패"; }
             } else {
                 btnLikes.classList.add('tab-active', 'bg-[#fff1e6]'); btnLikes.classList.remove('bg-gray-300'); btnMy.classList.remove('tab-active', 'bg-[#fff1e6]'); btnMy.classList.add('bg-gray-300');
-                try { const res = await fetchWithAuth(`/likes`, { method: 'GET' }); const data = await res.json(); renderLikedQuotes(data.content); } 
-                catch(e) { if(e.message !== "TOKEN_EXPIRED") listEl.innerHTML = "로드 실패"; }
+                try { const res = await fetchWithAuth(`/likes`, { method: 'GET' }); const data = await res.json(); renderLikedQuotes(data.content); } catch(e) { if(e.message !== "TOKEN_EXPIRED") listEl.innerHTML = "로드 실패"; }
             }
         }
-
         function renderLikedQuotes(likes) {
             const listEl = document.getElementById('mypage-list'); listEl.innerHTML = '';
             if (!likes || likes.length === 0) { listEl.innerHTML = `<div class="text-center text-gray-500 py-10 pixel-font">NO LIKES YET.</div>`; return; }
-            
             likes.forEach(item => { 
                 const date = new Date(item.createdAt).toLocaleDateString();
                 const likeCount = item.likeCount != null ? item.likeCount : 0; 
-                const el = document.createElement('div'); 
-                el.className = 'retro-box p-0 mb-4'; 
-                
+                const el = document.createElement('div'); el.className = 'retro-box p-0 mb-4'; 
                 el.innerHTML = `
                     <div class="title-bar bg-white !border-b-2">
-                        <span class="text-sm truncate max-w-[200px]">${item.title} (${item.pageNumber}p)</span>
-                        <div class="flex gap-2"><span class="text-xs bg-gray-200 px-1 border border-black">${item.category}</span></div>
+                         <div class="flex items-center min-w-0 flex-1 mr-2">
+                            <span class="text-sm truncate font-bold" title="${item.title}">${item.title}</span>
+                            <span class="text-xs whitespace-nowrap flex-shrink-0 ml-1">(${item.pageNumber}p)</span>
+                        </div>
+                        <div class="flex gap-2 flex-shrink-0"><span class="text-[10px] bg-gray-200 px-1 border border-black">${item.category}</span></div>
                     </div>
                     <div class="p-4 bg-[#fff]">
-                        <p class="text-lg font-serif mb-4 leading-relaxed">"${item.sentence}"</p>
-                        ${item.thought ? `<div class="bg-[#f0f9ff] p-2 text-sm border-l-4 border-blue-400 mb-4 text-gray-600"><span class="font-bold mr-2">💭 THOUGHT:</span> ${item.thought}</div>` : ''}
-                        <div class="flex justify-between items-end border-t border-dashed border-gray-400 pt-3 mt-2">
-                            <div class="flex flex-col"><span class="text-xs font-bold">${item.author}</span><span class="text-[10px] text-gray-500">${date}</span></div>
-                            <div class="flex gap-2 items-center">
-                                <span class="text-xs font-bold text-gray-500">${likeCount > 0 ? likeCount : ''}</span>
-                                <button onclick="toggleLike(${item.quoteId}, ${item.id})" class="p-2 hover:bg-red-100 border border-transparent hover:border-black transition-all rounded-full">
-                                    <i data-lucide="heart" class="w-4 h-4 fill-pink-500 text-pink-500"></i>
-                                </button>
-                            </div>
+                        <p class="text-lg mb-4 leading-relaxed tracking-wide">"${item.sentence}"</p>
+                        ${item.thought ? `<div class="bg-[#f0f9ff] p-3 text-sm border-2 border-dashed border-blue-300 mb-4 text-gray-600"><span class="font-bold mr-2 text-blue-500">💭 THOUGHT:</span> ${item.thought}</div>` : ''}
+                        <div class="flex justify-between items-end border-t-2 border-dotted border-gray-300 pt-3 mt-2">
+                            <div class="flex flex-col"><span onclick="goToUserProfile(${item.userId})" class="text-xs font-bold cursor-pointer hover:underline text-blue-800">@${item.nickname}</span><span class="text-[10px] text-gray-500 font-mono">${date}</span></div>
+                            <div class="flex gap-2 items-center"><span class="text-xs font-bold text-gray-500 pixel-font">${likeCount}</span><button onclick="toggleLike(${item.quoteId}, ${item.id})" class="p-2 hover:bg-red-100 border border-transparent hover:border-black transition-all rounded-full active:scale-90"><i data-lucide="heart" class="w-4 h-4 fill-pink-500 text-pink-500"></i></button></div>
                         </div>
-                    </div>
-                `; 
+                    </div>`; 
                 listEl.appendChild(el); 
             });
             lucide.createIcons();
         }
 
-        function showAuthScreen() { document.getElementById('auth-screen').classList.remove('hidden'); document.getElementById('main-screen').classList.add('hidden'); document.getElementById('mypage-screen').classList.add('hidden'); document.getElementById('fab-btn').classList.add('hidden'); }
-        function showMainScreen() { document.getElementById('auth-screen').classList.add('hidden'); document.getElementById('mypage-screen').classList.add('hidden'); document.getElementById('main-screen').classList.remove('hidden'); document.getElementById('fab-btn').classList.remove('hidden'); fetchQuotes(); }
+        // [수정됨] goToMyPage Logic - Fail Safe 적용
+        async function goToMyPage() {
+            document.getElementById('main-screen').classList.add('hidden'); 
+            document.getElementById('mypage-screen').classList.remove('hidden'); 
+            document.getElementById('user-profile-screen').classList.add('hidden'); 
+            document.getElementById('fab-btn').classList.add('hidden');
+
+            if (!myProfile.nickname) {
+                await fetchMyProfile();
+            }
+
+            if(myProfile.nickname) { 
+                document.getElementById('my-nickname').innerText = myProfile.nickname; 
+                document.getElementById('my-email').innerText = myProfile.email; 
+                document.getElementById('my-role').innerText = myProfile.userRole; 
+                if(myProfile.profileUrl) {
+                    const img = document.getElementById('my-profile-img');
+                    img.src = myProfile.profileUrl; 
+                    img.classList.remove('hidden');
+                }
+            }
+
+            switchMyPageTab('my-quotes');
+        }
+        
+        function showAuthScreen() { document.getElementById('auth-screen').classList.remove('hidden'); document.getElementById('main-screen').classList.add('hidden'); document.getElementById('mypage-screen').classList.add('hidden'); document.getElementById('user-profile-screen').classList.add('hidden'); document.getElementById('fab-btn').classList.add('hidden'); }
+        function showMainScreen() { currentViewingUserId = null; document.getElementById('auth-screen').classList.add('hidden'); document.getElementById('mypage-screen').classList.add('hidden'); document.getElementById('user-profile-screen').classList.add('hidden'); document.getElementById('main-screen').classList.remove('hidden'); document.getElementById('fab-btn').classList.remove('hidden'); fetchQuotes(); }
         function openModal() { document.getElementById('modal-overlay').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); document.getElementById('quote-form').reset(); }
         function showToast(msg) { const toast = document.getElementById('toast'); toast.innerText = msg; toast.classList.remove('hidden'); setTimeout(() => toast.classList.add('hidden'), 3000); }
