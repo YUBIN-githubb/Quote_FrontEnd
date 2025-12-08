@@ -51,6 +51,12 @@
             box-shadow: inset 2px 2px 0px rgba(0,0,0,0.2); 
         }
 
+        /* 에러 발생 시 입력창 스타일 */
+        .input-error {
+            border-color: #ef4444 !important; /* red-500 */
+            background-color: #fef2f2 !important; /* red-50 */
+        }
+
         .retro-btn { 
             background-color: var(--accent-yellow); 
             border: 2px solid var(--border-color); 
@@ -102,7 +108,6 @@
 </head>
 <body>
     <div id="app" class="app-container">
-        <!-- 1. 로그인 화면 -->
         <div id="auth-screen" class="flex flex-col gap-6 justify-center min-h-[80vh]">
             <div class="retro-box p-0">
                 <div class="title-bar"><span>SYSTEM_LOGIN.EXE</span><div class="flex gap-1"><div class="w-3 h-3 border border-black bg-white"></div><div class="w-3 h-3 border border-black bg-white"></div></div></div>
@@ -117,11 +122,36 @@
                     </div>
                     <form id="auth-form" onsubmit="handleAuth(event)">
                         <div class="flex flex-col gap-4">
-                            <div><label class="text-[10px] font-bold mb-1 block">EMAIL</label><input type="email" id="email" class="retro-input" required></div>
-                            <div><label class="text-[10px] font-bold mb-1 block">PASSWORD</label><input type="password" id="password" class="retro-input" required></div>
+                            <div>
+                                <label class="text-[10px] font-bold mb-1 block">EMAIL</label>
+                                <input type="email" id="email" class="retro-input" required>
+                            </div>
+                            
+                            <div>
+                                <label class="text-[10px] font-bold mb-1 block">PASSWORD</label>
+                                <input type="password" id="password" class="retro-input" required placeholder="8자 이상, 대/소문자, 숫자, 특수문자">
+                                <p id="pw-rule-error" class="text-[10px] text-red-500 mt-1 hidden">
+                                    * 8자 이상, 대문자, 소문자, 숫자, 특수문자(!@#$%^&*)를 모두 포함해야 합니다.
+                                </p>
+                            </div>
+
                             <div id="signup-fields" class="hidden flex flex-col gap-4">
-                                <div><label class="text-[10px] font-bold mb-1 block">NICKNAME</label><input type="text" id="nickname" class="retro-input"></div>
-                                <div><label class="text-[10px] font-bold mb-1 block">PROFILE URL</label><input type="text" id="profileUrl" class="retro-input"></div>
+                                <div>
+                                    <label class="text-[10px] font-bold mb-1 block">CONFIRM PASSWORD</label>
+                                    <input type="password" id="password-confirm" class="retro-input" placeholder="비밀번호를 다시 입력하세요">
+                                    <p id="pw-match-error" class="text-[10px] text-red-500 mt-1 hidden">
+                                        * 비밀번호가 일치하지 않습니다.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <label class="text-[10px] font-bold mb-1 block">NICKNAME</label>
+                                    <input type="text" id="nickname" class="retro-input">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold mb-1 block">PROFILE URL</label>
+                                    <input type="text" id="profileUrl" class="retro-input">
+                                </div>
                             </div>
                             <button type="submit" class="retro-btn primary w-full mt-4 h-12 text-lg">ENTER SYSTEM</button>
                         </div>
@@ -130,7 +160,6 @@
             </div>
         </div>
 
-        <!-- 2. 메인 피드 -->
         <div id="main-screen" class="hidden">
             <header class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-3 py-1 shadow-[3px_3px_0px_rgba(0,0,0,1)]">QUOTES_FEED</h2>
@@ -143,7 +172,6 @@
             <div id="quotes-list" class="flex flex-col gap-6"></div>
         </div>
 
-        <!-- 3. 마이페이지 -->
         <div id="mypage-screen" class="hidden">
             <header class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-3 py-1 shadow-[3px_3px_0px_rgba(0,0,0,1)]">MY_PAGE</h2>
@@ -167,7 +195,6 @@
             <div id="mypage-list" class="flex flex-col gap-4"></div>
         </div>
 
-        <!-- 4. 타 유저 프로필 -->
         <div id="user-profile-screen" class="hidden">
             <header class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold pixel-font bg-white border-2 border-black px-3 py-1 shadow-[3px_3px_0px_rgba(0,0,0,1)]">USER_PROFILE</h2>
@@ -193,7 +220,6 @@
         <button onclick="openModal()" id="fab-btn" class="hidden fixed bottom-6 right-6 w-14 h-14 bg-[#86efac] border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:translate-y-1 transition-all z-50 active:shadow-none active:translate-y-[4px]"><i data-lucide="plus" class="w-8 h-8 text-black"></i></button>
     </div>
 
-    <!-- 5. 글쓰기 모달 -->
     <div id="modal-overlay" class="fixed inset-0 bg-black/50 hidden z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="retro-box w-full max-w-md bg-[#fff1e6] animate-bounce-in relative">
             <div class="title-bar bg-[#fca5a5]"><span>NEW_QUOTE.TXT</span><button onclick="closeModal()" class="hover:bg-red-400 p-1 border border-transparent hover:border-black transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button></div>
@@ -207,7 +233,7 @@
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div><label class="text-[10px] font-bold mb-1 block">AUTHOR</label><input type="text" id="q-author" class="retro-input" placeholder="저자"></div>
-                    <div><label class="text-[10px] font-bold mb-1 block">PAGE</label><input type="number" id="q-page" class="retro-input" placeholder="0"></div>
+                    <div><label class="text-[10px] font-bold mb-1 block">PAGE</label><input type="number" id="q-page" class="retro-input" placeholder="0" min="0"></div>
                 </div>
                 <div><label class="text-[10px] font-bold mb-1 block">SENTENCE</label><textarea id="q-sentence" rows="3" class="retro-input" placeholder="여기에 문장을 입력하세요..." required></textarea></div>
                 <div><label class="text-[10px] font-bold mb-1 block">THOUGHT</label><textarea id="q-thought" rows="2" class="retro-input" placeholder="당신의 생각은?"></textarea></div>
@@ -226,7 +252,6 @@
         </div>
     </div>
 
-    <!-- 6. 책 검색 모달 -->
     <div id="book-search-overlay" class="fixed inset-0 bg-black/60 hidden z-[150] flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="retro-box w-full max-w-lg bg-[#e0e7ff] animate-bounce-in relative flex flex-col h-[80vh]">
             <div class="title-bar bg-[#93c5fd]"><span>SEARCH_BOOK.EXE</span><button onclick="closeBookSearchModal()" class="hover:bg-blue-400 p-1 border border-transparent hover:border-black"><i data-lucide="x" class="w-4 h-4"></i></button></div>
@@ -254,60 +279,129 @@
         let currentAuthMode = 'login', currentMyPageTab = 'my-quotes', token = localStorage.getItem('accessToken'), myProfile = {};
         let currentViewingUserId = null, currentBookPage = 1, currentBookQuery = "", isBookEnd = false;
 
+        const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+
         document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); checkAuth(); });
 
-        // [수정됨] 401 에러 처리 강화
         async function fetchWithAuth(url, options = {}) {
             const headers = { 'Content-Type': 'application/json', 'Authorization': token, ...options.headers };
             try {
                 const response = await fetch(`${API_BASE_URL}${url}`, { ...options, headers });
-                
-                // [핵심] 401 상태코드가 오면 무조건 만료 처리 (메시지 검사 X)
                 if (response.status === 401) {
-                    showToast("⚠️ 인증 세션이 만료되었습니다. 다시 로그인해주세요.");
-                    setTimeout(() => { logout(); }, 2000);
-                    throw new Error("TOKEN_EXPIRED");
+                    const errorText = await response.clone().text(); 
+                    if (errorText.toLowerCase().includes("expired") || errorText.includes("만료") || errorText.toLowerCase().includes("invalid") || errorText.includes("유효하지")) {
+                        showToast("⚠️ 인증 세션이 만료되었습니다.");
+                        setTimeout(() => { logout(); }, 2000);
+                        throw new Error("TOKEN_EXPIRED");
+                    } else {
+                        throw new Error("UNAUTHORIZED_ACTION"); 
+                    }
                 }
                 return response;
             } catch (err) { throw err; }
         }
 
-        // 1. Auth Logic
-        function checkAuth() { if (token) { showMainScreen(); fetchQuotes(); fetchMyProfile(); } else { showAuthScreen(); } }
+        function checkAuth() { 
+            if (token) { 
+                fetchMyProfile().then(() => { showMainScreen(); });
+            } else { 
+                showAuthScreen(); 
+            } 
+        }
+
         function switchAuthMode(mode) {
             currentAuthMode = mode;
             const signup = document.getElementById('signup-fields'), tabLogin = document.getElementById('tab-login'), tabSignup = document.getElementById('tab-signup'), btn = document.querySelector('#auth-form button');
-            if (mode === 'signup') { signup.classList.remove('hidden'); tabSignup.classList.add('bg-white'); tabSignup.classList.remove('bg-gray-200'); tabLogin.classList.remove('bg-white'); tabLogin.classList.add('bg-gray-200'); btn.innerText = "REGISTER USER"; } 
-            else { signup.classList.add('hidden'); tabLogin.classList.add('bg-white'); tabLogin.classList.remove('bg-gray-200'); tabSignup.classList.remove('bg-white'); tabSignup.classList.add('bg-gray-200'); btn.innerText = "ENTER SYSTEM"; }
+            const pwRule = document.getElementById('pw-rule-error'), pwMatch = document.getElementById('pw-match-error');
+            const pwInput = document.getElementById('password'), pwConfirm = document.getElementById('password-confirm');
+
+            pwRule.classList.add('hidden');
+            pwMatch.classList.add('hidden');
+            pwInput.classList.remove('input-error');
+            pwConfirm.classList.remove('input-error');
+            pwInput.value = '';
+            pwConfirm.value = '';
+
+            if (mode === 'signup') { 
+                signup.classList.remove('hidden'); 
+                tabSignup.classList.add('bg-white'); tabSignup.classList.remove('bg-gray-200'); 
+                tabLogin.classList.remove('bg-white'); tabLogin.classList.add('bg-gray-200'); 
+                btn.innerText = "REGISTER USER"; 
+            } else { 
+                signup.classList.add('hidden'); 
+                tabLogin.classList.add('bg-white'); tabLogin.classList.remove('bg-gray-200'); 
+                tabSignup.classList.remove('bg-white'); tabSignup.classList.add('bg-gray-200'); 
+                btn.innerText = "ENTER SYSTEM"; 
+            }
         }
+
+        function validateSignup() {
+            const pw = document.getElementById('password').value;
+            const pwConfirm = document.getElementById('password-confirm').value;
+            const pwRuleError = document.getElementById('pw-rule-error');
+            const pwMatchError = document.getElementById('pw-match-error');
+            const pwInput = document.getElementById('password');
+            const pwConfirmInput = document.getElementById('password-confirm');
+
+            let isValid = true;
+
+            if (!PASSWORD_REGEX.test(pw)) {
+                pwRuleError.classList.remove('hidden');
+                pwInput.classList.add('input-error');
+                isValid = false;
+            } else {
+                pwRuleError.classList.add('hidden');
+                pwInput.classList.remove('input-error');
+            }
+
+            if (pw !== pwConfirm) {
+                pwMatchError.classList.remove('hidden');
+                pwConfirmInput.classList.add('input-error');
+                isValid = false;
+            } else {
+                pwMatchError.classList.add('hidden');
+                pwConfirmInput.classList.remove('input-error');
+            }
+
+            return isValid;
+        }
+
         async function handleAuth(e) {
             e.preventDefault();
             const email = document.getElementById('email').value, password = document.getElementById('password').value, endpoint = currentAuthMode === 'login' ? '/signin' : '/signup';
             const body = { email, password };
-            if (currentAuthMode === 'signup') { body.nickname = document.getElementById('nickname').value; body.profileUrl = document.getElementById('profileUrl').value; body.userRole = 'USER'; }
+            
+            if (currentAuthMode === 'signup') { 
+                if (!validateSignup()) {
+                    showToast("비밀번호 입력을 확인해주세요.");
+                    return; 
+                }
+
+                body.nickname = document.getElementById('nickname').value; 
+                body.profileUrl = document.getElementById('profileUrl').value; 
+                body.userRole = 'USER'; 
+            }
+
             try {
                 const res = await fetch(`${API_BASE_URL}${endpoint}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-                if (!res.ok) throw new Error('인증 실패!');
+                
+                if (!res.ok) {
+                    let errMsg = '인증 실패!';
+                    try {
+                        const errData = await res.json();
+                        errMsg = errData.message || '인증 실패!';
+                    } catch(e) {}
+                    throw new Error(errMsg);
+                }
+
                 const data = await res.json();
                 if (currentAuthMode === 'signup') { showToast("회원가입 완료! 로그인하세요."); switchAuthMode('login'); } 
                 else { token = data.token; localStorage.setItem('accessToken', token); showToast("시스템 접속 성공"); checkAuth(); }
             } catch (err) { showToast(err.message); }
         }
-        function logout() { localStorage.clear(); token = null; location.reload(); }
 
-        async function fetchMyProfile() { 
-            try { 
-                const res = await fetchWithAuth(`/users`, { method: 'GET' }); 
-                if(res.ok) {
-                    myProfile = await res.json(); 
-                    return true; 
-                }
-            } catch(e) { 
-                // TOKEN_EXPIRED는 fetchWithAuth에서 이미 throw 했으므로 여기서 무시
-                if (e.message !== "TOKEN_EXPIRED") console.error(e); 
-            }
-            return false;
-        }
+        function logout() { localStorage.clear(); token = null; location.reload(); }
+        async function fetchMyProfile() { try { const res = await fetchWithAuth(`/users`, {}); if(res.ok) myProfile = await res.json(); return true; } catch(e) { if (e.message !== "TOKEN_EXPIRED") console.error(e); } return false; }
 
         async function fetchQuotes() {
             try {
@@ -315,10 +409,7 @@
                 if (!res.ok) throw new Error("로드 실패");
                 const data = await res.json();
                 renderQuotes(data.content, 'quotes-list');
-            } catch (err) { 
-                // [수정됨] TOKEN_EXPIRED가 아닐 때만 에러 메시지 표시
-                if(err.message !== "TOKEN_EXPIRED") document.getElementById('quotes-list').innerHTML = `<div class="text-red-500 text-center p-4">ERROR: ${err.message}</div>`; 
-            }
+            } catch (err) { if(err.message !== "TOKEN_EXPIRED") document.getElementById('quotes-list').innerHTML = `<div class="text-red-500 text-center p-4">ERROR: ${err.message}</div>`; }
         }
 
         function renderQuotes(quotes, targetId) {
@@ -331,37 +422,58 @@
                 const myLikeId = q.myLikeId || null; 
                 const likeCount = q.likeCount != null ? q.likeCount : 0;
                 const heartClass = myLikeId ? "fill-pink-500 text-pink-500" : "text-black";
+                const isMyQuote = (myProfile.id === q.userId);
+                
+                const deleteButton = isMyQuote ? `<button onclick="deleteQuote(${q.id})" class="p-2 hover:bg-gray-200 border border-transparent hover:border-black transition-all rounded-full ml-1" title="삭제"><i data-lucide="trash-2" class="w-4 h-4 text-red-500"></i></button>` : '';
+                
+                let publicStatusBadge = '';
+                if (targetId === 'mypage-list' && isMyQuote && q.isPublic) {
+                    const isPrivate = q.isPublic === 'PRIVATE';
+                    publicStatusBadge = isPrivate 
+                        ? `<span class="text-[10px] bg-red-200 text-red-800 px-1 border border-red-800 flex items-center gap-1"><i data-lucide="lock" class="w-3 h-3"></i>PRIVATE</span>` 
+                        : `<span class="text-[10px] bg-blue-200 text-blue-800 px-1 border border-blue-800 flex items-center gap-1"><i data-lucide="globe" class="w-3 h-3"></i>PUBLIC</span>`;
+                }
 
                 const item = document.createElement('div');
                 item.className = 'retro-box p-0 mb-4';
                 item.innerHTML = `
                     <div class="title-bar bg-white !border-b-2">
-                        <div class="flex items-center min-w-0 flex-1 mr-2">
-                            <span class="text-sm truncate font-bold" title="${q.title}">${q.title}</span>
-                            <span class="text-xs whitespace-nowrap flex-shrink-0 ml-1">(${q.pageNumber}p)</span>
+                        <div class="flex items-center min-w-0 flex-1 mr-2"><span class="text-sm truncate font-bold" title="${q.title}">${q.title}</span><span class="text-xs whitespace-nowrap flex-shrink-0 ml-1">(${q.pageNumber}p)</span></div>
+                        <div class="flex gap-2 flex-shrink-0 items-center">
+                            ${publicStatusBadge}
+                            <span class="text-[10px] bg-gray-200 px-1 border border-black">${q.category}</span>
                         </div>
-                        <div class="flex gap-2 flex-shrink-0"><span class="text-[10px] bg-gray-200 px-1 border border-black">${q.category}</span></div>
                     </div>
                     <div class="p-4 bg-[#fff]">
                         <p class="text-lg mb-4 leading-relaxed tracking-wide">"${q.sentence}"</p>
                         ${q.thought ? `<div class="bg-[#f0f9ff] p-3 text-sm border-2 border-dashed border-blue-300 mb-4 text-gray-600"><span class="font-bold mr-2 text-blue-500">💭 THOUGHT:</span> ${q.thought}</div>` : ''}
                         <div class="flex justify-between items-end border-t-2 border-dotted border-gray-300 pt-3 mt-2">
-                            <div class="flex flex-col">
-                                <span onclick="goToUserProfile(${q.userId})" class="text-xs font-bold cursor-pointer hover:underline text-blue-800">@${q.nickname}</span>
-                                <span class="text-[10px] text-gray-500 font-mono">${date}</span>
-                            </div>
-                            <div class="flex gap-2 items-center">
-                                <span class="text-xs font-bold text-gray-500 pixel-font">${likeCount > 0 ? likeCount : ''}</span>
-                                <button onclick="toggleLike(${q.id}, ${myLikeId})" class="p-2 hover:bg-red-100 border border-transparent hover:border-black transition-all rounded-full active:scale-90">
-                                    <i data-lucide="heart" class="w-4 h-4 ${heartClass}"></i>
-                                </button>
+                            <div class="flex flex-col"><span onclick="goToUserProfile(${q.userId})" class="text-xs font-bold cursor-pointer hover:underline text-blue-800">@${q.nickname}</span><span class="text-[10px] text-gray-500 font-mono">${date}</span></div>
+                            <div class="flex gap-1 items-center">
+                                <span class="text-xs font-bold text-gray-500 pixel-font mr-1">${likeCount > 0 ? likeCount : ''}</span>
+                                <button onclick="toggleLike(${q.id}, ${myLikeId})" class="p-2 hover:bg-red-100 border border-transparent hover:border-black transition-all rounded-full active:scale-90"><i data-lucide="heart" class="w-4 h-4 ${heartClass}"></i></button>
+                                ${deleteButton}
                             </div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 listEl.appendChild(item);
             });
             lucide.createIcons();
+        }
+
+        async function deleteQuote(quoteId) {
+            if (!confirm("정말 이 글을 삭제하시겠습니까?")) return;
+            try {
+                const res = await fetchWithAuth(`/quotes/${quoteId}`, { method: 'DELETE' });
+                if (res.ok) {
+                    showToast("삭제되었습니다.");
+                    if(!document.getElementById('main-screen').classList.contains('hidden')) fetchQuotes();
+                    else if (!document.getElementById('mypage-screen').classList.contains('hidden')) switchMyPageTab(currentMyPageTab);
+                } else { throw new Error("삭제 실패"); }
+            } catch(e) {
+                if (e.message === "UNAUTHORIZED_ACTION") showToast("⛔ 본인의 게시글만 삭제할 수 있습니다.");
+                else if (e.message !== "TOKEN_EXPIRED") showToast("오류가 발생했습니다.");
+            }
         }
 
         async function toggleLike(quoteId, myLikeId) {
@@ -374,19 +486,26 @@
                     res = await fetchWithAuth(`/quotes/${quoteId}/likes`, { method: 'POST' });
                     if(res.ok) showToast("이 글을 좋아합니다!");
                 }
-                if (!res.ok) throw new Error("작업 실패");
-                
+                if (!res.ok) { const errText = await res.text(); throw new Error(errText || "작업 실패"); }
                 if(!document.getElementById('main-screen').classList.contains('hidden')) fetchQuotes();
                 else if (!document.getElementById('mypage-screen').classList.contains('hidden')) switchMyPageTab(currentMyPageTab);
                 else if (!document.getElementById('user-profile-screen').classList.contains('hidden') && currentViewingUserId) loadOtherUserQuotes(currentViewingUserId);
-            } catch(e) { if(e.message !== "TOKEN_EXPIRED") { showToast("오류가 발생했습니다."); console.error(e); } }
+            } catch(e) { if(e.message !== "TOKEN_EXPIRED") showToast(e.message.length < 50 ? e.message : "오류가 발생했습니다."); }
         }
 
         async function createQuote(e) {
             e.preventDefault();
+            const pageInput = document.getElementById('q-page').value;
+            let pageNumber = parseInt(pageInput) || 0;
+
+            if (pageNumber < 0) {
+                showToast("페이지 번호는 0 이상이어야 합니다.");
+                return;
+            }
+
             const body = {
                 title: document.getElementById('q-title').value, author: document.getElementById('q-author').value, category: document.getElementById('q-category').value,
-                pageNumber: parseInt(document.getElementById('q-page').value) || 0, sentence: document.getElementById('q-sentence').value, thought: document.getElementById('q-thought').value, isPublic: document.getElementById('q-public').value
+                pageNumber: pageNumber, sentence: document.getElementById('q-sentence').value, thought: document.getElementById('q-thought').value, isPublic: document.getElementById('q-public').value
             };
             try {
                 const res = await fetchWithAuth(`/quotes`, { method: 'POST', body: JSON.stringify(body) });
@@ -437,9 +556,18 @@
             const prevBtn = document.getElementById('btn-prev-page'), nextBtn = document.getElementById('btn-next-page');
             prevBtn.style.opacity = prevBtn.disabled ? '0.5' : '1'; nextBtn.style.opacity = nextBtn.disabled ? '0.5' : '1';
         }
+        
         async function goToUserProfile(userId) {
-            currentViewingUserId = userId; document.getElementById('main-screen').classList.add('hidden'); document.getElementById('mypage-screen').classList.add('hidden'); document.getElementById('user-profile-screen').classList.remove('hidden'); document.getElementById('fab-btn').classList.add('hidden');
-            const listEl = document.getElementById('other-user-quotes-list'); listEl.innerHTML = '<div class="text-center py-4"><i data-lucide="hourglass" class="w-6 h-6 animate-spin mx-auto"></i></div>';
+            currentViewingUserId = userId; 
+            document.getElementById('main-screen').classList.add('hidden'); 
+            document.getElementById('mypage-screen').classList.add('hidden'); 
+            document.getElementById('user-profile-screen').classList.remove('hidden'); 
+            
+            // [수정] 타 유저 프로필에서도 글쓰기 버튼 노출 (hidden 클래스 제거)
+            document.getElementById('fab-btn').classList.remove('hidden');
+
+            const listEl = document.getElementById('other-user-quotes-list'); 
+            listEl.innerHTML = '<div class="text-center py-4"><i data-lucide="hourglass" class="w-6 h-6 animate-spin mx-auto"></i></div>';
             try {
                 const userRes = await fetchWithAuth(`/users/${userId}`, { method: 'GET' });
                 if(!userRes.ok) throw new Error("유저 정보 로드 실패");
@@ -457,39 +585,63 @@
                 renderQuotes(quotesData.content, 'other-user-quotes-list');
             } catch(e) { console.error(e); }
         }
+
         async function switchMyPageTab(tab) {
             currentMyPageTab = tab;
             const btnMy = document.getElementById('btn-tab-my'), btnLikes = document.getElementById('btn-tab-likes'), listEl = document.getElementById('mypage-list');
             listEl.innerHTML = '<div class="text-center py-4"><i data-lucide="hourglass" class="w-6 h-6 animate-spin mx-auto"></i></div>';
+            
             if(tab === 'my-quotes') {
-                btnMy.classList.add('tab-active', 'bg-[#fff1e6]'); btnMy.classList.remove('bg-gray-300'); btnLikes.classList.remove('tab-active', 'bg-[#fff1e6]'); btnLikes.classList.add('bg-gray-300');
-                try { const res = await fetchWithAuth(`/quotes`, { method: 'GET' }); const data = await res.json(); const myQuotes = data.content.filter(q => q.nickname === myProfile.nickname); renderQuotes(myQuotes, 'mypage-list'); } catch(e) { if(e.message !== "TOKEN_EXPIRED") listEl.innerHTML = "로드 실패"; }
+                btnMy.classList.add('tab-active', 'bg-[#fff1e6]'); btnMy.classList.remove('bg-gray-300'); 
+                btnLikes.classList.remove('tab-active', 'bg-[#fff1e6]'); btnLikes.classList.add('bg-gray-300');
+                try { 
+                    const res = await fetchWithAuth(`/users/me/quotes`, { method: 'GET' }); 
+                    const data = await res.json(); 
+                    renderQuotes(data.content, 'mypage-list'); 
+                } catch(e) { if(e.message !== "TOKEN_EXPIRED") listEl.innerHTML = "로드 실패"; }
             } else {
-                btnLikes.classList.add('tab-active', 'bg-[#fff1e6]'); btnLikes.classList.remove('bg-gray-300'); btnMy.classList.remove('tab-active', 'bg-[#fff1e6]'); btnMy.classList.add('bg-gray-300');
-                try { const res = await fetchWithAuth(`/likes`, { method: 'GET' }); const data = await res.json(); renderLikedQuotes(data.content); } catch(e) { if(e.message !== "TOKEN_EXPIRED") listEl.innerHTML = "로드 실패"; }
+                btnLikes.classList.add('tab-active', 'bg-[#fff1e6]'); btnLikes.classList.remove('bg-gray-300'); 
+                btnMy.classList.remove('tab-active', 'bg-[#fff1e6]'); btnMy.classList.add('bg-gray-300');
+                try { 
+                    const res = await fetchWithAuth(`/likes`, { method: 'GET' }); 
+                    const data = await res.json(); 
+                    renderLikedQuotes(data.content); 
+                } catch(e) { if(e.message !== "TOKEN_EXPIRED") listEl.innerHTML = "로드 실패"; }
             }
         }
+
         function renderLikedQuotes(likes) {
             const listEl = document.getElementById('mypage-list'); listEl.innerHTML = '';
             if (!likes || likes.length === 0) { listEl.innerHTML = `<div class="text-center text-gray-500 py-10 pixel-font">NO LIKES YET.</div>`; return; }
             likes.forEach(item => { 
                 const date = new Date(item.createdAt).toLocaleDateString();
                 const likeCount = item.likeCount != null ? item.likeCount : 0; 
+                const isMyQuote = (myProfile.id === item.userId);
+                
+                let publicStatusBadge = '';
+                if (isMyQuote && item.isPublic) {
+                    const isPrivate = item.isPublic === 'PRIVATE';
+                    publicStatusBadge = isPrivate 
+                        ? `<span class="text-[10px] bg-red-200 text-red-800 px-1 border border-red-800 flex items-center gap-1"><i data-lucide="lock" class="w-3 h-3"></i>PRIVATE</span>` 
+                        : `<span class="text-[10px] bg-blue-200 text-blue-800 px-1 border border-blue-800 flex items-center gap-1"><i data-lucide="globe" class="w-3 h-3"></i>PUBLIC</span>`;
+                }
+
+                const deleteButton = isMyQuote ? `<button onclick="deleteQuote(${item.quoteId})" class="p-2 hover:bg-gray-200 border border-transparent hover:border-black transition-all rounded-full ml-1" title="삭제"><i data-lucide="trash-2" class="w-4 h-4 text-red-500"></i></button>` : '';
                 const el = document.createElement('div'); el.className = 'retro-box p-0 mb-4'; 
                 el.innerHTML = `
                     <div class="title-bar bg-white !border-b-2">
-                         <div class="flex items-center min-w-0 flex-1 mr-2">
-                            <span class="text-sm truncate font-bold" title="${item.title}">${item.title}</span>
-                            <span class="text-xs whitespace-nowrap flex-shrink-0 ml-1">(${item.pageNumber}p)</span>
+                         <div class="flex items-center min-w-0 flex-1 mr-2"><span class="text-sm truncate font-bold" title="${item.title}">${item.title}</span><span class="text-xs whitespace-nowrap flex-shrink-0 ml-1">(${item.pageNumber}p)</span></div>
+                        <div class="flex gap-2 flex-shrink-0 items-center">
+                            ${publicStatusBadge}
+                            <span class="text-[10px] bg-gray-200 px-1 border border-black">${item.category}</span>
                         </div>
-                        <div class="flex gap-2 flex-shrink-0"><span class="text-[10px] bg-gray-200 px-1 border border-black">${item.category}</span></div>
                     </div>
                     <div class="p-4 bg-[#fff]">
                         <p class="text-lg mb-4 leading-relaxed tracking-wide">"${item.sentence}"</p>
                         ${item.thought ? `<div class="bg-[#f0f9ff] p-3 text-sm border-2 border-dashed border-blue-300 mb-4 text-gray-600"><span class="font-bold mr-2 text-blue-500">💭 THOUGHT:</span> ${item.thought}</div>` : ''}
                         <div class="flex justify-between items-end border-t-2 border-dotted border-gray-300 pt-3 mt-2">
                             <div class="flex flex-col"><span onclick="goToUserProfile(${item.userId})" class="text-xs font-bold cursor-pointer hover:underline text-blue-800">@${item.nickname}</span><span class="text-[10px] text-gray-500 font-mono">${date}</span></div>
-                            <div class="flex gap-2 items-center"><span class="text-xs font-bold text-gray-500 pixel-font">${likeCount}</span><button onclick="toggleLike(${item.quoteId}, ${item.id})" class="p-2 hover:bg-red-100 border border-transparent hover:border-black transition-all rounded-full active:scale-90"><i data-lucide="heart" class="w-4 h-4 fill-pink-500 text-pink-500"></i></button></div>
+                            <div class="flex gap-1 items-center"><span class="text-xs font-bold text-gray-500 pixel-font mr-1">${likeCount > 0 ? likeCount : ''}</span><button onclick="toggleLike(${item.quoteId}, ${item.id})" class="p-2 hover:bg-red-100 border border-transparent hover:border-black transition-all rounded-full active:scale-90"><i data-lucide="heart" class="w-4 h-4 fill-pink-500 text-pink-500"></i></button>${deleteButton}</div>
                         </div>
                     </div>`; 
                 listEl.appendChild(el); 
@@ -497,28 +649,22 @@
             lucide.createIcons();
         }
 
-        // [수정됨] goToMyPage Logic - Fail Safe 적용
         async function goToMyPage() {
             document.getElementById('main-screen').classList.add('hidden'); 
             document.getElementById('mypage-screen').classList.remove('hidden'); 
             document.getElementById('user-profile-screen').classList.add('hidden'); 
-            document.getElementById('fab-btn').classList.add('hidden');
+            
+            // [수정] 마이페이지에서도 글쓰기 버튼 노출 (hidden 클래스 제거)
+            document.getElementById('fab-btn').classList.remove('hidden');
 
-            if (!myProfile.nickname) {
-                await fetchMyProfile();
-            }
+            if (!myProfile.nickname) { await fetchMyProfile(); }
 
             if(myProfile.nickname) { 
                 document.getElementById('my-nickname').innerText = myProfile.nickname; 
                 document.getElementById('my-email').innerText = myProfile.email; 
                 document.getElementById('my-role').innerText = myProfile.userRole; 
-                if(myProfile.profileUrl) {
-                    const img = document.getElementById('my-profile-img');
-                    img.src = myProfile.profileUrl; 
-                    img.classList.remove('hidden');
-                }
+                if(myProfile.profileUrl) { const img = document.getElementById('my-profile-img'); img.src = myProfile.profileUrl; img.classList.remove('hidden'); }
             }
-
             switchMyPageTab('my-quotes');
         }
         
